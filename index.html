@@ -6,6 +6,7 @@
     <title>Sureader - 优雅的本地EPUB阅读器</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 </head>
 <body>
     <header class="header">
@@ -19,6 +20,7 @@
                 <a href="#screenshots">截图</a>
                 <a href="#download">下载</a>
                 <a href="#about">关于</a>
+                <a href="https://lozdusu.github.io/Sucut">Sucut截图器</a>
             </div>
         </nav>
     </header>
@@ -96,30 +98,30 @@
     <section id="download" class="download">
         <h2>下载</h2>
         <div class="download-content">
-            <div class="download-card premium">
-                <div class="promotion-badge">限时特惠</div>
-                <i class="fas fa-crown"></i>
-                <h3>Sureader 完整版</h3>
-                <p>一次付费，终身使用</p>
-                <div class="price">
-                    <span class="original-price">原价：¥99</span>
-                    <span class="current-price">特惠价：¥19</span>
-                    <span class="promotion-text">限时活动 - 早鸟特惠</span>
+            <div class="download-card">
+                <div class="download-header">
+                    <i class="fab fa-windows"></i>
+                    <div class="download-info">
+                        <h3>Windows 版本</h3>
+                        <div class="version-tag">
+                            <span class="version">v1.0.0</span>
+                            <span class="divider">•</span>
+                            <span class="size">350 MB</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="version-info">
-                    <span>最新版本：v1.0.0</span>
-                    <span>更新日期：2024-03-20</span>
+                <div class="download-action">
+                    <a href="downloads/Sureader-Setup-1.0.0.exe" class="download-btn" onclick="handleDownload(event)">
+                        <div class="btn-content">
+                            <div class="btn-main">
+                                <i class="fas fa-download"></i>
+                                <span>立即下载</span>
+                            </div>
+                            <div class="btn-sub">免费 | Windows</div>
+                        </div>
+                    </a>
+                    <span class="support-text">支持 Windows 10/11</span>
                 </div>
-                <ul class="feature-list">
-                    <li><i class="fas fa-check"></i> 本地EPUB阅读</li>
-                    <li><i class="fas fa-check"></i> 智能书架管理</li>
-                    <li><i class="fas fa-check"></i> 高级排版设置</li>
-                    <li><i class="fas fa-check"></i> 智能对比暗黑模式</li>
-                    <li><i class="fas fa-check"></i> 阅读进度同步</li>
-                    <li><i class="fas fa-check"></i> 终身免费更新</li>
-                </ul>
-                <a href="https://www.123912.com/ps/g5bhjv-aYUnH" class="btn primary" target="_blank">立即购买</a>
-                <p class="promotion-note">* 特惠价格限时有效，过期后将恢复原价</p>
             </div>
         </div>
     </section>
@@ -142,6 +144,24 @@
                 <h3>邮箱联系</h3>
                 <p class="contact-detail"><a href="mailto:lozd@qq.com">lozd@qq.com</a></p>
             </div>
+            <div class="contact-card qrcode-card">
+                <i class="fas fa-star"></i>
+                <h3>知识星球</h3>
+                <div class="qrcode-wrapper">
+                    <img src="images/zsxq-qrcode.png" alt="知识星球二维码" class="qrcode-image">
+                </div>
+                <p class="contact-detail">扫码加入交流</p>
+            </div>
+            <div class="contact-card">
+                <i class="fas fa-camera"></i>
+                <h3>截图工具</h3>
+                <p class="contact-detail">
+                    <a href="https://lozdusu.github.io/Sucut" target="_blank" class="tool-link">
+                        <i class="fas fa-external-link-alt"></i>
+                        点击查看
+                    </a>
+                </p>
+            </div>
         </div>
     </section>
 
@@ -154,5 +174,37 @@
             <p>&copy; 2024 Sureader. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+    // 获取初始下载次数
+    async function fetchDownloadCount() {
+        try {
+            const response = await fetch('/api/download-counter.php');
+            const data = await response.json();
+            document.getElementById('downloadCount').textContent = data.count;
+        } catch (error) {
+            console.error('获取下载次数失败:', error);
+        }
+    }
+
+    // 处理下载点击
+    async function handleDownload(event) {
+        try {
+            const response = await fetch('/api/download-counter.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const data = await response.json();
+            document.getElementById('downloadCount').textContent = data.count;
+        } catch (error) {
+            console.error('更新下载次数失败:', error);
+        }
+    }
+
+    // 页面加载时获取当前下载次数
+    document.addEventListener('DOMContentLoaded', fetchDownloadCount);
+    </script>
 </body>
 </html> 
